@@ -54,13 +54,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	glfwGetWindowSize(window, &VPWidth, &VPHeight);
 	glViewport(0, 0, VPWidth, VPHeight);
-
 	glfwMakeContextCurrent(window);
-
-	glClearColor(0, 0, 0, 1);
+	glClearColor(0.1, .2, .3, 1);
 	glMatrixMode(GL_PROJECTION);
+
 	glLoadIdentity();
-	//glEnable(GL_DEPTH_TEST);
+
 	render_loop();
 
 	glFlush();
@@ -91,7 +90,7 @@ void render_loop()
 		{
 			int fps = 1 / deltatime;
 			char titletext[10];
-			snprintf(titletext, 10, "Fps: %d", fps);
+			snprintf(titletext, 64, "Fps: %d", fps);
 			glfwSetWindowTitle(window, titletext);
 			fpsupdate = 0;
 		}
@@ -99,7 +98,7 @@ void render_loop()
 		//new frame time stored as old frame time
 		frametime = newframetime;
 		glClear(GL_COLOR_BUFFER_BIT);
-		//glLoadIdentity(); //sets origin to 0,0
+
 		if (posx > 49 || posx < -49)
 		{
 			j = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 0.5f);
@@ -115,16 +114,23 @@ void render_loop()
 		posy += j;
 
 		glTranslatef(i * deltatime, j * deltatime, 0);
+		glRotatef(.2, i * deltatime, j * deltatime, 0);
 		glBegin(GL_POLYGON);
 		glColor3f(0, 1, 0);
-		glVertex2f(-0.2 * ratioW, 0.2 * ratioH);
-		glVertex2f(-0.2 * ratioW, -0.2 * ratioH);
+		glVertex3f(-0.2 * ratioW, 0.2 * ratioH,0);
+		glVertex3f(-0.2 * ratioW, -0.2 * ratioH,0);
 		glColor3f(2, 0.2f, .3f);
-		glVertex2f(0.2 * ratioW, -0.2 * ratioH);
-		glVertex2f(0.2 * ratioW, 0.2 * ratioH);
+		glVertex3f(0.2 * ratioW, -0.2 * ratioH,0);
+		glVertex3f(0.2 * ratioW, 0.2 * ratioH,0);
 		glEnd();
-	
-
+		glBegin(GL_POLYGON);
+		glColor3f(1, 0, 0);
+		glVertex3f(-0.2 * ratioW, 0.2 * ratioH, .3);
+		glVertex3f(-0.2 * ratioW, -0.2 * ratioH, .3);
+		glColor3f(2, 0.2f, .3f);
+		glVertex3f(0.2 * ratioW, -0.2 * ratioH, .3);
+		glVertex3f(0.2 * ratioW, 0.2 * ratioH, .3);
+		glEnd();
 
 		//Swap the back frame buffer to the front (display it on screen)
 		glfwSwapBuffers(window);
