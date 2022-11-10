@@ -90,7 +90,7 @@ void render_loop()
 		{
 			int fps = 1 / deltatime;
 			char titletext[10];
-			snprintf(titletext, 64, "Fps: %d", fps);
+			snprintf(titletext, 10, "Fps: %d", fps);
 			glfwSetWindowTitle(window, titletext);
 			fpsupdate = 0;
 		}
